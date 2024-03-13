@@ -5,6 +5,7 @@ pipeline {
     environment {
         AWS_ACCESS_KEY_ID     = credentials('AWS_ACCESS_KEY_ID')
         AWS_SECRET_ACCESS_KEY = credentials('AWS_SECRET_ACCESS_KEY')
+        
     }
 
     agent {
@@ -52,6 +53,11 @@ pipeline {
                 sh "terraform apply -input=false tfplan"
             }
         }
+        stage('Destroy') {
+            steps {
+                sh "terraform destroy -auto-approve"
+            }
+        }        
     }
 
   }
